@@ -1,0 +1,21 @@
+version: '3'
+services:
+  booking-app:
+    image: postgres
+    container_name: user-db
+    environment:
+      POSTGRES_USER: mozz
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5566:5432"
+    networks:
+      - booking-app
+    restart: unless-stopped
+
+volumes:
+  db:
+networks:
+  booking-app:
