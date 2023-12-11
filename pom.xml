@@ -23,6 +23,7 @@
         <module>booking-service</module>
 
         <module>event-service</module>
+        <module>notification-service</module>
     </modules>
 
     <properties>

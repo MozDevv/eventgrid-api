@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,13 +32,13 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
 
-      try {
-          User user1 = userRepository.save(user);
-          return modelMapper.map(user1, UserDto.class);
+        try {
+            User user1 = userRepository.save(user);
+            return modelMapper.map(user1, UserDto.class);
 
-      } catch (Exception exception) {
-          throw new IllegalArgumentException(exception);
-      }
+        } catch (Exception exception) {
+            throw new IllegalArgumentException(exception);
+        }
 
     }
 
@@ -46,12 +47,21 @@ public class UserServiceImpl implements UserService {
 
         List<User> userList = userRepository.findAll();
 
-        List<UserDto> userDtosList = userList.stream()
+        return userList.stream()
                 .map(user -> modelMapper.map(user, UserDto.class))
                 .toList();
+    }
 
-        return userDtosList;
+    @Override
+    public UserDto findById(long id) {
 
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("User Not Found");
+        }
+
+        return modelMapper.map(user, UserDto.class);
     }
 
 
