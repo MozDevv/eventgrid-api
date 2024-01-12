@@ -90,21 +90,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.2.1</version>
-                <configuration>
-                    <from>
-                        <image>eclipse-temurin:17</image>
-                    </from>
-                    <to>
-                        <!--     Image will be docker.io/mozz/mozz-api:0.0.1-SNAPSHOT                   -->
-                        <image>registry.hub.docker.com/mozdev/${project.artifactId}</image>
-                    </to>
 
-                </configuration>
-            </plugin>
 
         </plugins>
     </build>
