@@ -27,6 +27,8 @@ public class User implements UserDetails {
 
     private String email;
 
+    private String company;
+
     private String firstName;
 
     private String lastName;
@@ -36,6 +38,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Event> events;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Clients> clients;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserServices> userServices;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

@@ -4,7 +4,6 @@ import app.moz.config.JwtService;
 import app.moz.entity.Role;
 import app.moz.entity.User;
 import app.moz.repository.UserRepository;
-import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,13 +25,21 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
+                .company(request.getCompany())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        var User = userRepository.save(user);
+        var user1 = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()
+                .company(user1.getCompany())
+                .firstName(user1.getFirstName())
+                .lastname(user1.getLastName())
+                .company(user1.getCompany())
+                .email(user1.getEmail())
+                .password(user1.getPassword())
+                .id(user1.getId())
                 .token(jwtToken)
                 .build();
     }
@@ -43,14 +50,22 @@ public class AuthenticationService {
                         request.getEmail(),
                         request.getPassword()
                 )
+
         );
 
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
+                .id(user.getId())
                 .token(jwtToken)
+
+
                 .build();
     }
 
+
 }
+
+
+

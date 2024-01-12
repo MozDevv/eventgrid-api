@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setPassword(userDto.getPassword());
+        user.setCompany(userDto.getCompany());
 
         try {
             User user1 = userRepository.save(user);

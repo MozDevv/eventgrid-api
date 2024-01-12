@@ -1,4 +1,4 @@
-package app.moz.auth;
+package app.moz.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String firstName;
-    private String lastname;
+public class ClientRequest {
 
-    private String company;
+    private String clientName;
+
+    private String  phoneNumber;
+
     private String email;
-    private String password;
 }
