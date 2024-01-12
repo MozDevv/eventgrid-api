@@ -1,11 +1,7 @@
 package app.moz.service;
 
-import app.moz.dto.BookingDto;
-import app.moz.dto.BookingRequest;
-import app.moz.dto.EventDto;
-import app.moz.dto.UserDto;
+import app.moz.dto.*;
 import app.moz.entity.Booking;
-import app.moz.event.BookingPlacedEvent;
 import app.moz.exc.BookingCreationException;
 import app.moz.exc.EventNotAvailableException;
 import app.moz.exc.EventNotFoundException;
@@ -17,10 +13,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -70,7 +64,7 @@ public class BookingServiceImpl implements BookingService {
                 .bodyToMono(EventDto.class)
                 .block();
 
-        UserDto user = webClient.build().get()
+       UserDto user = webClient.build().get()
                 .uri("http://user-service/api/v1/user/{userId}", userId)
                 .retrieve()
                 .bodyToMono(UserDto.class)
