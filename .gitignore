@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Maven modules ##
+api-gateway/
+booking-service/
+discovery-server/
+notification-service/

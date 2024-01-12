@@ -1,8 +1,8 @@
 version: '3'
 services:
-  pg-user:
+  user-db:
     image: postgres
-    container_name: postgres
+    container_name: user-db
     environment:
       POSTGRES_USER: mozz
       POSTGRES_PASSWORD: 1234
@@ -10,32 +10,26 @@ services:
     volumes:
       - db:/data/postgres
     ports:
-      - "5566:5432"
+      - "5431:5432"
     networks:
-      - db
-    command: -p 5566
+      - booking-app
     restart: unless-stopped
-
 
   user-api:
-    image: mozdev/user-service:latest
+    image: mozdev/eventgrid-api:latest
     container_name: user-api
     ports:
-      - "8082:8082"
+      - "8088:8082"
     depends_on:
-      - pg-user
+      - user-db
     restart: unless-stopped
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-user:5432/user
-
-
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user
     networks:
-      - db
+      - booking-app
 
 
-networks:
-  db:
-    driver: bridge
 volumes:
   db:
-
+networks:
+  booking-app:
