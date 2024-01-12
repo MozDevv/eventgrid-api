@@ -11,6 +11,7 @@ public interface EventService {
 
     List<EventDto> getAllEvents();
 
+    EventDto getEventById(int id);
     List<EventDto> getSingleUserEvents(long id);
 
     void  deleteEvents(int id);

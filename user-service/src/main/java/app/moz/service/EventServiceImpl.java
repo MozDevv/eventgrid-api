@@ -61,6 +61,21 @@ public class EventServiceImpl implements EventService{
     }
 
     @Override
+    public EventDto getEventById(int id) {
+
+        Optional<Event> eventOptional = eventRepository.findById(id);
+
+        if (eventOptional.isEmpty()) {
+            throw new IllegalArgumentException("Not found");
+        }
+
+        Event event = eventOptional.get();
+
+        return modelMapper.map(event, EventDto.class);
+
+    }
+
+    @Override
     public List<EventDto> getSingleUserEvents(long id) {
 
         Optional<User> userOptional = userRepository.findById(id);

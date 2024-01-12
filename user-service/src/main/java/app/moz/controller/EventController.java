@@ -25,6 +25,14 @@ public class EventController {
         return eventService.createEvent(eventRequest, id);
     }
 
+
+    @GetMapping("/event/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public  EventDto getEventById (@PathVariable int id) {
+        return eventService.getEventById(id);
+    }
+
+
     @GetMapping("/events")
     @ResponseStatus(HttpStatus.OK)
     public List<EventDto> getAllEvents() {
