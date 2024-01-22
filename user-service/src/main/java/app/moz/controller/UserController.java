@@ -2,6 +2,7 @@ package app.moz.controller;
 
 
 import app.moz.dto.UserDto;
+import app.moz.entity.User;
 import app.moz.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,13 @@ public class UserController {
     public UserDto getUserById (@PathVariable long userId) {
         return userService.findById(userId);
     }
+
+    @PutMapping("/users/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto updateUser (@PathVariable long userId, @RequestBody UserDto userDto) {
+        return userService.updateUser(userId, userDto);
+    }
+
+
 
 }

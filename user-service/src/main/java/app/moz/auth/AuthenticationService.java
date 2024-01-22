@@ -4,8 +4,10 @@ import app.moz.config.JwtService;
 import app.moz.entity.Role;
 import app.moz.entity.User;
 import app.moz.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
-    public AuthenticationResponse register ( RegisterRequest request) {
+
+    public AuthenticationResponse register(RegisterRequest request) {
 
         var user = User.builder()
                 .firstName(request.getFirstName())
@@ -44,7 +47,35 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse login (AuthenticationRequest request) {
+    public AuthenticationResponse changePassword(ChangePasswordRequest request, long userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new BadCredentialsException("Password is Incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+
+        User updatedUser = userRepository.save(user);
+
+        String jwtToken = jwtService.generateToken(updatedUser);
+
+        return AuthenticationResponse.builder()
+                .firstName(updatedUser.getCompany())
+                .lastname(updatedUser.getLastName())
+                .email(updatedUser.getEmail())
+                .password(updatedUser.getPassword())
+                .company(updatedUser.getCompany())
+                .id(updatedUser.getId())
+                .token(jwtToken)
+                .build();
+
+
+    }
+
+    public AuthenticationResponse login(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

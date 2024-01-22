@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(userDto.getPassword());
         user.setCompany(userDto.getCompany());
 
+
         try {
             User user1 = userRepository.save(user);
             return modelMapper.map(user1, UserDto.class);
@@ -63,6 +64,37 @@ public class UserServiceImpl implements UserService {
         }
 
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto updateUser(long userId, UserDto userDto) {
+
+        Optional<User> existingUser = userRepository.findById(userId);
+
+        if (existingUser.isEmpty()) {
+            throw new IllegalArgumentException("User was not Found");
+        }
+
+        User user = existingUser.get();
+
+        if (userDto.getFirstName() != null) {
+            user.setFirstName(userDto.getFirstName());
+        }
+        if (userDto.getLastName() != null) {
+            user.setLastName(userDto.getLastName());
+        }
+        if (userDto.getEmail() != null) {
+            user.setEmail(userDto.getEmail());
+        }
+        if (userDto.getCompany() != null) {
+            user.setCompany(userDto.getCompany());
+        }
+
+
+
+        User user1 = userRepository.save(user);
+
+        return modelMapper.map(user1, UserDto.class);
     }
 
 

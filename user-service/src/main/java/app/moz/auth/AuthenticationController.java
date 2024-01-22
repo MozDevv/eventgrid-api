@@ -29,5 +29,11 @@ public class AuthenticationController {
 
     }
 
+    @PostMapping("/change-password/{userId}")
+    public  ResponseEntity<AuthenticationResponse> changePassword (
+            @PathVariable long userId, @RequestBody ChangePasswordRequest request
+    ) {
+        return ResponseEntity.ok(authenticationService.changePassword(request, userId));
+    }
 
 }
