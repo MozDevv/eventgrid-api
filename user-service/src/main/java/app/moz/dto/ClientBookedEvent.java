@@ -13,5 +13,6 @@ public class ClientBookedEvent {
 
     private String link;
 
+    private String name;
 
 }

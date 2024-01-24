@@ -87,7 +87,12 @@ public class ClientServiceImpl implements  ClientService {
         Clients client1 = clientRepository.save(client);
 
         if (clientRequest.getLink() !=null && !clientRequest.getLink().isEmpty() )    {
-            kafkaTemplate.send("notificationTopic", new ClientBookedEvent(client1.getEmail(), clientRequest.getLink()));
+            kafkaTemplate.send("notificationTopic", new ClientBookedEvent(
+                    client1.getEmail(),
+                    clientRequest.getLink(),
+                    clientRequest.getClientName()
+
+            ));
         }
 
 
