@@ -8,6 +8,7 @@ import app.moz.repository.EventRepository;
 import app.moz.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class EventServiceImpl implements EventService{
     private final EventRepository eventRepository;
     private  final ModelMapper modelMapper;
     private final UserRepository userRepository;
+
 
     @Override
     public EventDto createEvent(EventRequest eventRequest, long userId) {
@@ -43,6 +45,7 @@ public class EventServiceImpl implements EventService{
         event.setUser(user);
 
         Event event1 = eventRepository.save(event);
+
 
 
         EventDto eventDto= modelMapper.map(event1 , EventDto.class);

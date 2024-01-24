@@ -1,5 +1,6 @@
 package app.moz.service;
 
+import app.moz.dto.ClientBookedEvent;
 import app.moz.dto.ClientDto;
 import app.moz.dto.ClientRequest;
 import app.moz.entity.Clients;
@@ -9,6 +10,7 @@ import app.moz.repository.UserRepository;
 import ch.qos.logback.core.net.server.Client;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class ClientServiceImpl implements  ClientService {
     private final ClientRepository clientRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+   private final KafkaTemplate<String, ClientBookedEvent> kafkaTemplate;
 
     @Override
     public List<ClientDto> findAllClients() {
@@ -47,6 +50,7 @@ public class ClientServiceImpl implements  ClientService {
         return clientDtoList;
 
     }
+
 
     @Override
     public ClientDto findSingleClient(int clientId) {
@@ -81,6 +85,11 @@ public class ClientServiceImpl implements  ClientService {
         client.setUser(user.get());
 
         Clients client1 = clientRepository.save(client);
+
+        if (clientRequest.getLink() !=null && !clientRequest.getLink().isEmpty() )    {
+            kafkaTemplate.send("notificationTopic", new ClientBookedEvent(client1.getEmail(), clientRequest.getLink()));
+        }
+
 
         return modelMapper.map(client1, ClientDto.class);
     }

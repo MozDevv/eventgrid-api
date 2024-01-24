@@ -16,4 +16,6 @@ public class ClientRequest {
     private String  phoneNumber;
 
     private String email;
+
+    private String link;
 }

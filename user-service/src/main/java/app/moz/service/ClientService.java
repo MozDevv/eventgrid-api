@@ -12,6 +12,7 @@ public interface ClientService {
 
    List<ClientDto> findUserClients(int userId);
 
+  // ClientDto sendEmail( String email );
    ClientDto findSingleClient (int clientId);
 
    ClientDto createClient (ClientRequest clientRequest ,long userId);

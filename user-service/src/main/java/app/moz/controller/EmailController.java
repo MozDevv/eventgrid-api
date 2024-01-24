@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 @AllArgsConstructor
 @Slf4j
 public class EmailController {
-
+/*
     private final EmailSenderService emailSenderService;
 
     @PostMapping("/email")
@@ -41,5 +41,5 @@ public class EmailController {
                 ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Fallback: Failed to send email")
         );
     }
-
+*/
 }
