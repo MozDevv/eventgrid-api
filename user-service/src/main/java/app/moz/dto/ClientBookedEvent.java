@@ -13,6 +13,10 @@ public class ClientBookedEvent {
 
     private String link;
 
+    private int clientId;
+
     private String name;
+
+
 
 }

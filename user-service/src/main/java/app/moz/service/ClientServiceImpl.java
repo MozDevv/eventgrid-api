@@ -90,12 +90,11 @@ public class ClientServiceImpl implements  ClientService {
             kafkaTemplate.send("notificationTopic", new ClientBookedEvent(
                     client1.getEmail(),
                     clientRequest.getLink(),
+                    client1.getClientId(),
                     clientRequest.getClientName()
 
             ));
         }
-
-
         return modelMapper.map(client1, ClientDto.class);
     }
 

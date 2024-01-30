@@ -37,6 +37,7 @@ public class UserController {
         return userService.findById(userId);
     }
 
+
     @PutMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public UserDto updateUser (@PathVariable long userId, @RequestBody UserDto userDto) {

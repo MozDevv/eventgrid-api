@@ -66,12 +66,14 @@ public class EmailSenderService {
 
     private String createFormattedEmail (ClientBookedEvent clientBookedEvent) {
 
+         String email = "http://localhost:3000/details/" + clientBookedEvent.getClientId();
+
         String formattedEmail = "Hello " + clientBookedEvent.getName() + ",<br/><br/>"
                 + "Thank you for booking with us!<br/><br/>"
                 + "Booking Details:<br/>"
                 + "Name: " + clientBookedEvent.getName() + "<br/>"
                 + "Email: " + clientBookedEvent.getToEmail() + "<br/>"
-                + "Booking Link: <a href='" + clientBookedEvent.getLink() + "'>View Details</a><br/><br/>"
+                + "Booking Link: <a href='" + email + "'>View Details</a><br/><br/>"
                 + "We look forward to serving you.<br/><br/>"
                 + "Best regards,<br/>"
                 + "Mozz Tech Solutions";

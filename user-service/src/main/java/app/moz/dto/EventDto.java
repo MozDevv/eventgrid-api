@@ -20,6 +20,8 @@ public class EventDto {
 
     private String description;
 
+    private LocalDateTime createdAt;
+
     private LocalDateTime start;
 
     private LocalDateTime end;

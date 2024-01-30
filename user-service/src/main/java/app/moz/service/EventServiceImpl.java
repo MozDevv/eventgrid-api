@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class EventServiceImpl implements EventService{
+public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
-    private  final ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
 
@@ -42,25 +42,24 @@ public class EventServiceImpl implements EventService{
         event.setStart(eventRequest.getStart());
         event.setEnd(eventRequest.getEnd());
 
+
         event.setUser(user);
 
         Event event1 = eventRepository.save(event);
+        
+        EventDto eventDto = modelMapper.map(event1, EventDto.class);
 
+        eventDto.setUserId(userId);
 
-
-        EventDto eventDto= modelMapper.map(event1 , EventDto.class);
-
-         eventDto.setUserId(userId);
-
-         return eventDto;
+        return eventDto;
     }
 
     @Override
     public List<EventDto> getAllEvents() {
 
-        List <Event> events = eventRepository.findAll();
+        List<Event> events = eventRepository.findAll();
 
-       return events.stream().map(event -> modelMapper.map(event, EventDto.class)).collect(Collectors.toList());
+        return events.stream().map(event -> modelMapper.map(event, EventDto.class)).collect(Collectors.toList());
     }
 
     @Override
@@ -88,7 +87,7 @@ public class EventServiceImpl implements EventService{
         }
         User user = userOptional.get();
 
-        List <Event> eventList = eventRepository.findByUser(user);
+        List<Event> eventList = eventRepository.findByUser(user);
 
         return eventList.stream().map(event -> modelMapper.map(event, EventDto.class)).toList();
 

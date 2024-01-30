@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                     });
                 })
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**", "/api/v1/user/**", "/api/v1/new/clients/**", "/api/v1/new/events/**", "/api/v1/email")
+                        .requestMatchers("/api/v1/auth/**", "/api/v1/user/**", "/api/v1/new/clients/**", "/api/v1/new/events/**")
                         .permitAll()
                         .anyRequest().
                         authenticated()

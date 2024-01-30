@@ -17,10 +17,17 @@ public class ClientController {
 
     private final ClientService clientService;
 
+
     @GetMapping("/clients")
     @ResponseStatus(HttpStatus.OK)
     public List<ClientDto> getAllClients () {
         return clientService.findAllClients();
+    }
+
+    @GetMapping("/new/clients/{clientId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientDto getSingleClient (@PathVariable int clientId) {
+        return clientService.findSingleClient(clientId);
     }
 
     @GetMapping("/clients/{userId}")
