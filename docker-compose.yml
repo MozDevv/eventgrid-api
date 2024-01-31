@@ -22,6 +22,8 @@ services:
       - "8088:8082"
     depends_on:
       - user-db
+      - zookeeper
+      - broker
     restart: unless-stopped
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user
@@ -32,6 +34,8 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.0.1
     container_name: zookeeper
+    restart: unless-stopped
+
     ports:
       - "2181:2181"
     environment:
@@ -43,6 +47,7 @@ services:
   broker:
     image: confluentinc/cp-kafka:7.0.1
     container_name: broker
+    restart: unless-stopped
     ports:
       - "9092:9092"
     depends_on:
