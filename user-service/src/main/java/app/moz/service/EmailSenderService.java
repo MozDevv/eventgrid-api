@@ -69,7 +69,7 @@ public class EmailSenderService {
          String email = "http://localhost:3000/details/" + clientBookedEvent.getClientId() + "/" + clientBookedEvent.getLink();
 
         String formattedEmail = "Hello " + clientBookedEvent.getName() + ",<br/><br/>"
-                + "Thank you for booking with us!<br/><br/>"
+                + "Thank you for booking with us!!!!!!<br/><br/>"
                 + "Booking Details:<br/>"
                 + "Name: " + clientBookedEvent.getName() + "<br/>"
                 + "Email: " + clientBookedEvent.getToEmail() + "<br/>"
