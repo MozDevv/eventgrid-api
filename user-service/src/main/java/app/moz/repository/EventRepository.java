@@ -1,5 +1,6 @@
 package app.moz.repository;
 
+import app.moz.dto.EventDto;
 import app.moz.entity.Event;
 import app.moz.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
     List<Event> findByUser(User user);
 
+    Event findByDescription(String email);
 }

@@ -16,4 +16,6 @@ public interface EventService {
 
     void  deleteEvents(int id);
 
+    EventDto findEventByDescription(String email);
+
 }

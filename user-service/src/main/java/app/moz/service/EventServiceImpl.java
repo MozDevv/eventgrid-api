@@ -108,4 +108,15 @@ public class EventServiceImpl implements EventService {
 
 
     }
+
+    @Override
+    public EventDto findEventByDescription(String email) {
+
+        Event event = eventRepository.findByDescription(email);
+
+
+        return null;
+    }
+
+
 }

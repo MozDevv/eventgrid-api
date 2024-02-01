@@ -66,13 +66,15 @@ public class EmailSenderService {
 
     private String createFormattedEmail (ClientBookedEvent clientBookedEvent) {
 
-         String email = "http://localhost:3000/details/" + clientBookedEvent.getClientId();
+         String email = "http://localhost:3000/details/" + clientBookedEvent.getClientId() + "/" + clientBookedEvent.getLink();
 
         String formattedEmail = "Hello " + clientBookedEvent.getName() + ",<br/><br/>"
                 + "Thank you for booking with us!<br/><br/>"
                 + "Booking Details:<br/>"
                 + "Name: " + clientBookedEvent.getName() + "<br/>"
                 + "Email: " + clientBookedEvent.getToEmail() + "<br/>"
+                + "eventId" + clientBookedEvent.getLink() + "<br/>"
+                + "link" + email +"<br/>"
                 + "Booking Link: <a href='" + email + "'>View Details</a><br/><br/>"
                 + "We look forward to serving you.<br/><br/>"
                 + "Best regards,<br/>"
@@ -80,7 +82,4 @@ public class EmailSenderService {
 
         return formattedEmail;
     }
-
-
-
 }
