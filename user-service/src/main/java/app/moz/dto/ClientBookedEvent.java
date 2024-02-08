@@ -1,5 +1,6 @@
 package app.moz.dto;
 
+import app.moz.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,8 @@ public class ClientBookedEvent {
     private String name;
 
 
+    private String userFirstName;
+
+    private  String userEmail;
 
 }

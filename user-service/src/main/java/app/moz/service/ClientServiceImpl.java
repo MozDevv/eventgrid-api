@@ -24,7 +24,8 @@ public class ClientServiceImpl implements  ClientService {
     private final ClientRepository clientRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-   private final KafkaTemplate<String, ClientBookedEvent> kafkaTemplate;
+   private final KafkaTemplate<String, ClientBookedEvent> clientNotificationKafkaTemplate;
+   private final KafkaTemplate<String, ClientBookedEvent> userNotificationKafkaTemplate;
 
     @Override
     public List<ClientDto> findAllClients() {
@@ -87,11 +88,25 @@ public class ClientServiceImpl implements  ClientService {
         Clients client1 = clientRepository.save(client);
 
         if (clientRequest.getLink() !=null && !clientRequest.getLink().isEmpty() )    {
-            kafkaTemplate.send("notificationTopic", new ClientBookedEvent(
+            userNotificationKafkaTemplate.send("notificationTopic", new ClientBookedEvent(
                     client1.getEmail(),
                     clientRequest.getLink(),
                     client1.getClientId(),
-                    clientRequest.getClientName()
+                    clientRequest.getClientName(),
+                    client1.getUser().getFirstName(),
+                    client1.getUser().getEmail()
+
+
+            ));
+
+            clientNotificationKafkaTemplate.send("userNotificationTopic", new ClientBookedEvent(
+                    client1.getEmail(),
+                    clientRequest.getLink(),
+                    client1.getClientId(),
+                    clientRequest.getClientName(),
+                    client1.getUser().getFirstName(),
+                    client1.getUser().getEmail()
+
 
             ));
         }
